@@ -8,4 +8,4 @@ pip install sqlalchemy alembic asyncpg psycopg2 psycopg2-binary
 
 
 alembic init migration
-
+alembic revision --autogenerate -m 'initial' 
