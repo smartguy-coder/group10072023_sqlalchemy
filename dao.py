@@ -51,6 +51,7 @@ async def update_user(user_id: int):
         await session.execute(query)
         await session.commit()
 
+
 async def delete_user(user_id: int):
     async with async_session_maker() as session:
         query = delete(User).where(User.id == user_id)
