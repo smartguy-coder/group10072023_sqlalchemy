@@ -21,3 +21,15 @@ async def create_user(
             notes=notes,
             is_conflict=is_conflict,
         )
+        await session.execute(query)
+        await session.commit()
+
+
+async def main():
+    await asyncio.gather(
+        create_user(
+            name='name1',
+            login='login1',
+            password='password1',
+        )
+    )
