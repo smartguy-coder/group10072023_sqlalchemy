@@ -30,9 +30,10 @@ async def fetch_users(skip: int = 0, limit: int = 10):
     async with async_session_maker() as session:
         query = select(User).offset(skip).limit(limit)
         result = await session.execute(query)
-        print(result.scalars().all()[0].id)
+        # print(type(result.scalars().all()[0]))
         # print(result.scalars().all()[0].__dict__)
-        return result.all()
+        return result.scalars().all()
+
 
 
 async def main():
