@@ -35,6 +35,20 @@ async def fetch_users(skip: int = 0, limit: int = 10):
         return result.scalars().all()
 
 
+async def get_user_by_id(user_id: int):
+    async with async_session_maker() as session:
+        query = select(User).filter_by(id=user_id)
+        print(query)
+        result = await session.execute(query)
+        # print(result.first())
+        # print(result.scalar_one_or_none())
+        return result.scalar_one_or_none()
+
+async def update_user(user_id: int):
+    async with async_session_maker() as session:
+        query = update(User).where(User.id == user_id).values(name='asdfdf')
+        print(query)
+        await session.execute(query)
 
 async def main():
     # await asyncio.gather(
@@ -45,6 +59,8 @@ async def main():
     #         notes='*'*200
     #     )
     # )
-    await asyncio.gather(fetch_users())
+    # await asyncio.gather(fetch_users())
+    # await asyncio.gather(get_user_by_id(3))
+    # await asyncio.gather(get_user_by_id(3))
 
 asyncio.run(main())
