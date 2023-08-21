@@ -21,6 +21,7 @@ async def create_user(
             notes=notes,
             is_conflict=is_conflict,
         )
+        print(query)
         await session.execute(query)
         await session.commit()
 
@@ -33,3 +34,5 @@ async def main():
             password='password1',
         )
     )
+
+asyncio.run(main())
