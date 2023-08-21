@@ -10,7 +10,7 @@ async def create_user(
         name: str,
         login: str,
         password: str,
-        notes: str = None,
+        notes: str = '',
         is_conflict: bool = False,
 ):
     async with async_session_maker() as session:
@@ -26,13 +26,24 @@ async def create_user(
         await session.commit()
 
 
+async def fetch_users(skip: int = 0, limit: int = 10):
+    async with async_session_maker() as session:
+        query = select(User).offset(skip).limit(limit)
+        result = await session.execute(query)
+        print(result.scalars().all()[0].id)
+        # print(result.scalars().all()[0].__dict__)
+        return result.all()
+
+
 async def main():
-    await asyncio.gather(
-        create_user(
-            name='name1',
-            login='login1',
-            password='password1',
-        )
-    )
+    # await asyncio.gather(
+    #     create_user(
+    #         name='name1',
+    #         login='login2',
+    #         password='password1',
+    #         notes='*'*200
+    #     )
+    # )
+    await asyncio.gather(fetch_users())
 
 asyncio.run(main())

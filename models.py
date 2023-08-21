@@ -26,7 +26,7 @@ class User(BaseInfoMixin, Base):
     is_conflict = Column(Boolean, default=False)
 
     def __repr__(self) -> str:
-        return f'User {self.name} {self.id}'
+        return f'User {self.name} -> #{self.id}'
 
 
 class Order(BaseInfoMixin, Base):
