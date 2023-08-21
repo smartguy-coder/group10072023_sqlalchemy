@@ -46,9 +46,18 @@ async def get_user_by_id(user_id: int):
 
 async def update_user(user_id: int):
     async with async_session_maker() as session:
-        query = update(User).where(User.id == user_id).values(name='asdfdf')
+        query = update(User).where(User.id == user_id).values(name='Vasja')
         print(query)
         await session.execute(query)
+        await session.commit()
+
+async def delete_user(user_id: int):
+    async with async_session_maker() as session:
+        query = delete(User).where(User.id == user_id)
+        print(query)
+        await session.execute(query)
+        await session.commit()
+
 
 async def main():
     # await asyncio.gather(
@@ -61,6 +70,7 @@ async def main():
     # )
     # await asyncio.gather(fetch_users())
     # await asyncio.gather(get_user_by_id(3))
-    # await asyncio.gather(get_user_by_id(3))
+    # await asyncio.gather(update_user(222))
+    await asyncio.gather(delete_user(2))
 
 asyncio.run(main())
