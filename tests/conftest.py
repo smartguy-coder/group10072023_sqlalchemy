@@ -9,6 +9,7 @@ from app.main import app
 @pytest.fixture(scope='session')
 def client():
     client_ = TestClient(app)
+    print(11111111111)
     yield client_
     del client_
 
