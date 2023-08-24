@@ -6,6 +6,7 @@ app = FastAPI(
     version='0.0.1',
 )
 
-@app
+
+@app.get('/')
 async def main_page():
     return {'data': 'something'}
