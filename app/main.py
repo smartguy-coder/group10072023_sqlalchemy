@@ -1,5 +1,13 @@
 from fastapi import FastAPI
 
+import sentry_sdk
+
+
+sentry_sdk.init(
+    dsn="https://1a6b12e7dbf7418233793cb807de9e53@o4505229726318592.ingest.sentry.io/4505761003864065",
+    traces_sample_rate=1.0,
+)
+
 app = FastAPI(
     title='First our app',
     description='we are champions',
@@ -11,7 +19,6 @@ app = FastAPI(
 @app.get('/')
 @app.post('/')
 async def main_page() -> dict:
-
     return {'greeting': 'HELLO'}
 
 
