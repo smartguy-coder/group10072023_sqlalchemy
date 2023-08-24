@@ -4,6 +4,7 @@ app = FastAPI(
     title='First our app',
     description='we are champions',
     version='0.0.1',
+    debug=True
 )
 
 
@@ -14,8 +15,8 @@ async def main_page() -> dict:
 
 
 @app.get('/{user_name}')
-@app.get('/{user_name}/{user_nik}')
-async def user_page(user_name: str, user_nik: str = '', limit: int = 10, skip: int = 0) -> dict:
-    data = [i for i in range(1000)]
+@app.get('/{user_name}/{user_nick}')
+async def user_page(user_name: str, user_nick: str = '', limit: int = 10, skip: int = 0) -> dict:
+    data = [i for i in range(1000)][skip:][:limit]
 
-    return {'user_name': user_name, 'user_nik': user_nik, 'data': data}
+    return {'user_name': user_name, 'user_nick': user_nick, 'data': data}
