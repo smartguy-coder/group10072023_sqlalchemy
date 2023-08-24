@@ -11,7 +11,8 @@ app = FastAPI(
 @app.get('/')
 @app.post('/')
 async def main_page() -> dict:
-    return {'data': 'something'}
+
+    return {'greeting': 'HELLO'}
 
 
 @app.get('/{user_name}')
