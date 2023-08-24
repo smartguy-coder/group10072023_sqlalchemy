@@ -11,3 +11,6 @@ alembic init migration
 alembic revision --autogenerate -m 'initial' 
  alembic upgrade head
  alembic downgrade -1
+
+
+pip install fastapi[all] pytest pytest-asyncio
