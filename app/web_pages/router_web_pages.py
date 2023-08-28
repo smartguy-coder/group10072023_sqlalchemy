@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi.templating import Jinja2Templates
 
 
 router = APIRouter(
@@ -6,3 +7,4 @@ router = APIRouter(
     tags=['menu', 'landing'],
 )
 
+templates = Jinja2Templates(directory='app\\templates')
