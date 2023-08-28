@@ -20,7 +20,7 @@ app = FastAPI(
 
 app.mount('/app/static', StaticFiles(directory='app/static'), name='static')
 
-
+app.include_router(router_web_pages.router)
 
 
 @app.get('/')
