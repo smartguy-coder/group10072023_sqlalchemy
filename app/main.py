@@ -12,7 +12,7 @@ sentry_sdk.init(
 )
 
 app = FastAPI(
-    title='First our app',
+    title='Our first app',
     description='we are champions',
     version='0.0.1',
     debug=True
