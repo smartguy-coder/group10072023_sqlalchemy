@@ -35,7 +35,7 @@ async def get_menu(request: Request):
     )
 
 @router.get('/about-us')
-async def get_menu(request: Request):
+async def about_us(request: Request):
     context = {
         'request': request,
         'title': 'Про нас',
