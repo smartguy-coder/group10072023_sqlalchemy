@@ -13,8 +13,9 @@
     <ul>
     {% for dish in menu %}
         <br>
-        <p class="h2">{{ dish['title'] }}</p>
+<!--        <p class="h2">{{ dish['title'] }}</p>-->
         <p class="h2">{{ dish.title }}</p>
+        <img src="{{ url_for('static', path='images/' + dish.image) }}">
 
 
     {% endfor %}
