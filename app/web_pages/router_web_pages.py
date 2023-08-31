@@ -24,26 +24,33 @@ templates = Jinja2Templates(directory='app\\templates')
 #     )
 
 
-@router.get('/menu')
-async def get_menu(request: Request):
-    context = {
-        'request': request,
-        'title': 'Наше меню',
-        # 'menu': [],
-        'menu': menu_data.menu,
-    }
+# @router.get('/menu')
+# async def get_menu(request: Request):
+#     context = {
+#         'request': request,
+#         'title': 'Наше меню',
+#         'menu': menu_data.menu,
+#     }
+#
+#     return templates.TemplateResponse(
+#         'menu.html',
+#         context=context,
+#     )
 
-    return templates.TemplateResponse(
-        'menu.html',
-        context=context,
-    )
 
 @router.post('/search')
-async def search(request: Request, dish_name: str = Form(None)):
+@router.get('/menu')
+async def get_menu(request: Request, dish_name: str = Form(None)):
+    filtered_menu = []
+    if dish_name:
+        for dish in menu_data.menu:
+            if dish_name.lower() in dish['title'].lower():
+                filtered_menu.append(dish)
+
     context = {
         'request': request,
-        'title': 'Наше меню',
-        'menu': menu_data.menu,
+        'title': f'Результати пошуку за {dish_name}' if dish_name else 'Наше меню',
+        'menu': filtered_menu if dish_name else menu_data.menu,
     }
 
     return templates.TemplateResponse(
