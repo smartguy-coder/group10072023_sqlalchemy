@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 
+from app import menu_data
+
 
 router = APIRouter(
     prefix='/web',
@@ -27,6 +29,7 @@ async def get_menu(request: Request):
     context = {
         'request': request,
         'title': 'Наше меню',
+        'menu': menu_data.menu,
     }
 
     return templates.TemplateResponse(

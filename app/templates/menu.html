@@ -7,4 +7,18 @@
 
 
 {% block content %}
+<p class="h1">{{ title }}</p>
+{{ menu }}
+
+    <ul>
+    {% for dish in menu %}
+        <br>
+        <p class="h2">{{ dish['title'] }}</p>
+        <p class="h2">{{ dish.title }}</p>
+
+
+    {% endfor %}
+    </ul>
+
+
 {% endblock %}
