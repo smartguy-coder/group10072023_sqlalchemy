@@ -70,3 +70,16 @@ async def about_us(request: Request):
         'about_us.html',
         context=context,
     )
+
+
+@router.get('/map')
+async def about_us(request: Request):
+    context = {
+        'request': request,
+        'title': 'Карта проїзду',
+    }
+
+    return templates.TemplateResponse(
+        'map.html',
+        context=context,
+    )
