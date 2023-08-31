@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Form
 from fastapi.templating import Jinja2Templates
 
 from app import menu_data
@@ -30,6 +30,19 @@ async def get_menu(request: Request):
         'request': request,
         'title': 'Наше меню',
         # 'menu': [],
+        'menu': menu_data.menu,
+    }
+
+    return templates.TemplateResponse(
+        'menu.html',
+        context=context,
+    )
+
+@router.post('/search')
+async def search(request: Request, dish_name: str = Form(None)):
+    context = {
+        'request': request,
+        'title': 'Наше меню',
         'menu': menu_data.menu,
     }
 
