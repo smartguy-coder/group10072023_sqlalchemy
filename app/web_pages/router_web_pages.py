@@ -29,7 +29,8 @@ async def get_menu(request: Request):
     context = {
         'request': request,
         'title': 'Наше меню',
-        'menu': menu_data.menu,
+        'menu': [],
+        # 'menu': menu_data.menu,
     }
 
     return templates.TemplateResponse(
