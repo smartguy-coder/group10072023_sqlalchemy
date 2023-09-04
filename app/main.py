@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import sentry_sdk
 
 from app.web_pages import router_web_pages
+from app.sockets import router_websocket
 
 
 sentry_sdk.init(
@@ -21,6 +22,7 @@ app = FastAPI(
 app.mount('/app/static', StaticFiles(directory='app/static'), name='static')
 
 app.include_router(router_web_pages.router)
+app.include_router(router_websocket.router)
 
 
 @app.get('/')
