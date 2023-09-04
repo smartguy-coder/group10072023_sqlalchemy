@@ -1,4 +1,5 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+import json
 
 
 router = APIRouter(
@@ -12,3 +13,4 @@ async def websocket_endpoint(websocket: WebSocket):
     while True:
         text = await websocket.receive_text()
         await websocket.send_text(f'Your text: {text}')
+        # await websocket.send_json(json.dumps({'count': 5}))
