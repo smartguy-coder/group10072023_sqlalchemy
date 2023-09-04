@@ -73,7 +73,7 @@ async def about_us(request: Request):
 
 
 @router.get('/map')
-async def about_us(request: Request):
+async def map(request: Request):
     context = {
         'request': request,
         'title': 'Карта проїзду',
@@ -81,5 +81,18 @@ async def about_us(request: Request):
 
     return templates.TemplateResponse(
         'map.html',
+        context=context,
+    )
+
+
+@router.get('/message')
+async def message(request: Request):
+    context = {
+        'request': request,
+        'title': 'Написати для всіх повідомлення',
+    }
+
+    return templates.TemplateResponse(
+        'message_to_all.html',
         context=context,
     )
