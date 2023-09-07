@@ -20,10 +20,12 @@ async def create_user(
             password=password,
             notes=notes,
             is_conflict=is_conflict,
-        )
+        ).returning(User.id, User.login)
         print(query)
-        await session.execute(query)
+        data = await session.execute(query)
         await session.commit()
+        print(data, 888888888888888888888888)
+        return tuple(data)
 
 
 async def fetch_users(skip: int = 0, limit: int = 10):
@@ -60,18 +62,18 @@ async def delete_user(user_id: int):
         await session.commit()
 
 
-async def main():
-    # await asyncio.gather(
-    #     create_user(
-    #         name='name1',
-    #         login='login2',
-    #         password='password1',
-    #         notes='*'*200
-    #     )
-    # )
-    # await asyncio.gather(fetch_users())
-    # await asyncio.gather(get_user_by_id(3))
-    # await asyncio.gather(update_user(222))
-    await asyncio.gather(delete_user(2))
-
-asyncio.run(main())
+# async def main():
+#     # await asyncio.gather(
+#     #     create_user(
+#     #         name='name1',
+#     #         login='login2',
+#     #         password='password1',
+#     #         notes='*'*200
+#     #     )
+#     # )
+#     # await asyncio.gather(fetch_users())
+#     # await asyncio.gather(get_user_by_id(3))
+#     # await asyncio.gather(update_user(222))
+#     await asyncio.gather(delete_user(2))
+#
+# asyncio.run(main())
