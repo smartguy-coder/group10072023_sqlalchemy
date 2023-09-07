@@ -4,10 +4,13 @@ from fastapi import HTTPException, Security, status, Request
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 
+import settings
+
 
 class AuthHandler:
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-    secret = 'SECRET'  # dotenv
+    secret = settings.Settings.TOKEN_SECRET
+    algorithm = settings.Settings.TOKEN_ALGORITHM
 
     @classmethod
     def get_password_hash(cls, password: str) -> str:
@@ -27,13 +30,13 @@ class AuthHandler:
         return jwt.encode(
             payload,
             cls.secret,
-            algorithm='HS256'
+            algorithm=cls.algorithm,
         )
 
     @classmethod
     def decode_token(cls, token: str) -> dict:
         try:
-            payload = jwt.decode(token, cls.secret, algorithms=['HS256'])
+            payload = jwt.decode(token, cls.secret, algorithms=[cls.algorithm])
             return payload
         except jwt.ExpiredSignatureError:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Signature has expired')
