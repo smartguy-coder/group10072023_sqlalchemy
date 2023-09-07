@@ -14,3 +14,5 @@ class Settings:
     DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD', '')
     DATABASE_HOST = os.getenv('DATABASE_HOST', '')
     DATABASE_PORT = os.getenv('DATABASE_PORT', '')
+
+    MAX_NOTES_LENGTH = 200
