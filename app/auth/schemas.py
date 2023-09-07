@@ -9,4 +9,7 @@ class AuthDetails(BaseModel):
     notes: str = Field(default='', max_length=settings.Settings.MAX_NOTES_LENGTH)
 
 
-class
+class AuthRegistered(BaseModel):
+    success: bool = Field(examples=[True])
+    id: int = Field(examples=[656])
+    login: EmailStr = Field(examples=['login@ukr.net'])

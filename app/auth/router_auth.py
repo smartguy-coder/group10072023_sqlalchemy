@@ -1,5 +1,5 @@
-from fastapi import APIRouter
-from .schemas import AuthDetails
+from fastapi import APIRouter, status
+from .schemas import AuthDetails, AuthRegistered
 
 
 router = APIRouter(
@@ -8,6 +8,8 @@ router = APIRouter(
 )
 
 
-@router.post('/register')
-async def register(auth_details: AuthDetails) -> dict:
-    return {}
+@router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
+async def register(auth_details: AuthDetails):
+
+
+    return AuthRegistered(success=True, id=5656, login='kgdfhkj@ukr.net')
