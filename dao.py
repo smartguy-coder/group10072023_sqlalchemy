@@ -24,8 +24,7 @@ async def create_user(
         print(query)
         data = await session.execute(query)
         await session.commit()
-        print(data, 888888888888888888888888)
-        return tuple(data)
+        return tuple(data)[0]
 
 
 async def fetch_users(skip: int = 0, limit: int = 10):
