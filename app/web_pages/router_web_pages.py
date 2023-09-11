@@ -51,6 +51,8 @@ async def get_menu(request: Request, dish_name: str = Form(None)):
         'request': request,
         'title': f'Результати пошуку за {dish_name}' if dish_name else 'Наше меню',
         'menu': filtered_menu if dish_name else menu_data.menu,
+        'username': 'ljdvhgjkdfkg',
+        'is_admin': False
     }
 
     return templates.TemplateResponse(
@@ -77,6 +79,7 @@ async def map(request: Request):
     context = {
         'request': request,
         'title': 'Карта проїзду',
+
     }
 
     return templates.TemplateResponse(
