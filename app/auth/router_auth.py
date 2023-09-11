@@ -13,6 +13,7 @@ router = APIRouter(
 
 @router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
 async def register(auth_details: AuthDetails):
+    is_login_already_used = await dao.get_user_by_login()
 
     hashed_password = AuthHandler.get_password_hash(auth_details.password)
 
