@@ -32,8 +32,8 @@ async def register(request: Request, response: Response, auth_details: AuthDetai
         notes=auth_details.notes,
     )
 
-
+    token = AuthHandler.encode_token(user_data[0])
     response.set_cookie(key='my_name', value='Vasyl', max_age=10, httponly=True)
-    response.set_cookie(key='token', value=user_data, max_age=10, httponly=True)
+    response.set_cookie(key='token', value=token, httponly=True)
 
     return AuthRegistered(success=True, id=user_data[0], login=user_data[1])
