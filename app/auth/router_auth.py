@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 
 from .auth_lib import AuthHandler
 from .schemas import AuthDetails, AuthRegistered
@@ -13,7 +13,12 @@ router = APIRouter(
 
 @router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
 async def register(auth_details: AuthDetails):
-    is_login_already_used = await dao.get_user_by_login()
+    is_login_already_used = await dao.get_user_by_login(auth_details.login)
+    if is_login_already_used:
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail=f'User with email {auth_details.login} already exists'
+        )
 
     hashed_password = AuthHandler.get_password_hash(auth_details.password)
 
