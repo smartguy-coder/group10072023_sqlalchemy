@@ -13,3 +13,8 @@ class AuthRegistered(BaseModel):
     success: bool = Field(examples=[True])
     id: int = Field(examples=[656])
     login: EmailStr = Field(examples=['login@ukr.net'])
+
+
+class AuthLogin(BaseModel):
+    login: EmailStr = Field(examples=['login@ukr.net'])
+    password: str = Field(min_length=8, max_length=50, examples=['65dfg6dfb5%&^'])

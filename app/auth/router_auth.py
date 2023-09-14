@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, HTTPException, Request, Response
 
 from .auth_lib import AuthHandler
-from .schemas import AuthDetails, AuthRegistered
+from .schemas import AuthDetails, AuthRegistered, AuthLogin
 import dao
 
 
@@ -12,7 +12,7 @@ router = APIRouter(
 
 
 @router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
-async def register(request: Request, response: Response, auth_details: AuthDetails):
+async def register_api(request: Request, response: Response, auth_details: AuthDetails):
     # print(request.cookies,          88888888888888888)
     # print(request.__dict__,          88888888888888888)
 
@@ -37,3 +37,7 @@ async def register(request: Request, response: Response, auth_details: AuthDetai
     response.set_cookie(key='token', value=token, httponly=True)
 
     return AuthRegistered(success=True, id=user_data[0], login=user_data[1])
+
+@router.post('/login')
+async def login_api(response: Response, user_data: AuthLogin):
+    user =
