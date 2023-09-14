@@ -1,8 +1,10 @@
-from fastapi import APIRouter, status, HTTPException, Request, Response
+from fastapi import APIRouter, status, HTTPException, Request, Response, Depends
 
 from .auth_lib import AuthHandler, AuthLibrary
 from .schemas import AuthDetails, AuthRegistered, AuthLogin
 import dao
+from app.auth import dependencies
+
 
 
 router = APIRouter(
@@ -44,3 +46,8 @@ async def login_api(response: Response, user_data: AuthLogin):
     token = await AuthHandler.encode_token(user.id)
     response.set_cookie(key='token', value=token, httponly=True)
     return {'user': user.login, "logged_in": True}
+
+@router.post('/logout')
+async def logout_api(response: Response, user=Depends(dependencies.get_current_user_required)):
+    print(user, 555555555555555555555555555555555555555555555)
+
