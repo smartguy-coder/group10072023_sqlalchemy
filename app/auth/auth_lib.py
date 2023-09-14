@@ -4,7 +4,10 @@ from fastapi import HTTPException, Security, status, Request
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 
+from pydantic import EmailStr
+
 import settings
+import dao
 
 
 class AuthHandler:
@@ -13,15 +16,15 @@ class AuthHandler:
     algorithm = settings.Settings.TOKEN_ALGORITHM
 
     @classmethod
-    def get_password_hash(cls, password: str) -> str:
+    async def get_password_hash(cls, password: str) -> str:
         return cls.pwd_context.hash(password)
 
     @classmethod
-    def verify_password(cls, plain_password: str, hashed_password: str) -> bool:
+    async def verify_password(cls, plain_password: str, hashed_password: str) -> bool:
         return cls.pwd_context.verify(plain_password, hashed_password)
 
     @classmethod
-    def encode_token(cls, user_id: int) -> str:
+    async def encode_token(cls, user_id: int) -> str:
         payload = {
             'exp': datetime.utcnow() + timedelta(days=0, minutes=5),
             'iat': datetime.utcnow(),
@@ -34,7 +37,7 @@ class AuthHandler:
         )
 
     @classmethod
-    def decode_token(cls, token: str) -> dict:
+    async def decode_token(cls, token: str) -> dict:
         try:
             payload = jwt.decode(token, cls.secret, algorithms=[cls.algorithm])
             return payload
@@ -43,3 +46,15 @@ class AuthHandler:
         except jwt.InvalidTokenError:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid token')
 
+class AuthLibrary:
+
+    @classmethod
+    async def authenticate_user(cls, login: EmailStr, password: str):
+        user = await dao.get_user_by_login(login)
+        print(user.password, 99999999999999999999999999999)
+        if not (user and await AuthHandler.verify_password(password, user.password)):
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                detail=f'Incorrect login or password'
+            )
+        return user

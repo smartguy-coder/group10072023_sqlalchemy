@@ -23,7 +23,7 @@ async def register_api(request: Request, response: Response, auth_details: AuthD
             detail=f'User with email {auth_details.login} already exists'
         )
 
-    hashed_password = AuthHandler.get_password_hash(auth_details.password)
+    hashed_password = await AuthHandler.get_password_hash(auth_details.password)
 
     user_data = await dao.create_user(
         name=auth_details.name,
@@ -32,7 +32,7 @@ async def register_api(request: Request, response: Response, auth_details: AuthD
         notes=auth_details.notes,
     )
 
-    token = AuthHandler.encode_token(user_data[0])
+    token = await AuthHandler.encode_token(user_data[0])
     response.set_cookie(key='my_name', value='Vasyl', max_age=10, httponly=True)
     response.set_cookie(key='token', value=token, httponly=True)
 
@@ -40,4 +40,4 @@ async def register_api(request: Request, response: Response, auth_details: AuthD
 
 @router.post('/login')
 async def login_api(response: Response, user_data: AuthLogin):
-    user =
+    pass
