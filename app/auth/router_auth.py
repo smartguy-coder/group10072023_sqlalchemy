@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException, Request, Response
 
-from .auth_lib import AuthHandler
+from .auth_lib import AuthHandler, AuthLibrary
 from .schemas import AuthDetails, AuthRegistered, AuthLogin
 import dao
 
@@ -40,4 +40,6 @@ async def register_api(request: Request, response: Response, auth_details: AuthD
 
 @router.post('/login')
 async def login_api(response: Response, user_data: AuthLogin):
-    pass
+    print(user_data.login, 777777777777)
+    user = await AuthLibrary.authenticate_user(user_data.login, user_data.password)
+    # pass
