@@ -52,10 +52,9 @@ class AuthLibrary:
     @classmethod
     async def authenticate_user(cls, login: EmailStr, password: str):
         user = await dao.get_user_by_login(login)
-        print(user.__dict__, 99999999999999999999999999999)
         if not (user and await AuthHandler.verify_password(password, user.password)):
             raise HTTPException(
                 status_code=status.HTTP_406_NOT_ACCEPTABLE,
-                detail=f'Incorrect login or password'
+                detail=f'Incorrect login "{login}" or password'
             )
         return user

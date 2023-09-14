@@ -40,6 +40,7 @@ async def register_api(request: Request, response: Response, auth_details: AuthD
 
 @router.post('/login')
 async def login_api(response: Response, user_data: AuthLogin):
-    print(user_data.login, 777777777777)
     user = await AuthLibrary.authenticate_user(user_data.login, user_data.password)
-    # pass
+    token = await AuthHandler.encode_token(user.id)
+    response.set_cookie(key='token', value=token, httponly=True)
+    return {'user': user.login, "logged_in": True}
