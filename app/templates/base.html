@@ -60,17 +60,15 @@
                 </li>
 
                 {% if user %}
-
-
                  <li class="nav-item">
                     <a class="nav-link" href="/web/logout">Вийти, {{ user.name }}</a>
                 </li>
-
-
-
                 {% else %}
                  <li class="nav-item">
-                    <a class="nav-link" href="/web/about-us">Розлогуватися</a>
+                    <a class="nav-link" href="/web/register">Зареєструватися</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/login">Ввійти</a>
                 </li>
                 {% endif %}
 
