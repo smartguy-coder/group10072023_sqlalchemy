@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Request, Form, HTTPException, status
+from fastapi import APIRouter, Request, Form, HTTPException, status, Depends
 from fastapi.templating import Jinja2Templates
 from pydantic import EmailStr
 
 from app import menu_data
 from app.auth.auth_lib import AuthHandler, AuthLibrary
+from app.auth import dependencies
+
 
 import dao
 
@@ -46,7 +48,7 @@ templates = Jinja2Templates(directory='app\\templates')
 
 @router.post('/search')
 @router.get('/menu')
-async def get_menu(request: Request, dish_name: str = Form(None)):
+async def get_menu(request: Request, dish_name: str = Form(None), user=Depends(dependencies.get_current_user_required)):
     filtered_menu = []
     if dish_name:
         for dish in menu_data.menu:
@@ -58,7 +60,7 @@ async def get_menu(request: Request, dish_name: str = Form(None)):
         'title': f'Результати пошуку за {dish_name}' if dish_name else 'Наше меню',
         'menu': filtered_menu if dish_name else menu_data.menu,
         'username': 'ljdvhgjkdfkg',
-        'is_admin': False
+        'user': user
     }
 
     return templates.TemplateResponse(
