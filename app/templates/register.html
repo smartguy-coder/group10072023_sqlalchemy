@@ -6,14 +6,13 @@
 
 
 {% block content %}
-<p class="h1">{{ title }}</p>
 
-<form class="row g-3" method="post" action="">
+<form method="post" action="">
 
 
     <div class="mb-3">
-      <label for="messageText" class="form-label">{{ title }}</label>
-      <textarea class="form-control" id="messageText" rows="3" required minlength="5"></textarea>
+      <label for="login" class="form-label">{{ title }}</label>
+      <input type="email"  class="form-control" id="login" required placeholder="name@example.com">
     </div>
 
 
