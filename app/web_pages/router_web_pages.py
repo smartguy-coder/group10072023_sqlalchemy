@@ -99,3 +99,17 @@ async def message(request: Request):
         'message_to_all.html',
         context=context,
     )
+
+
+@router.get('/register')
+@router.post('/register')
+async def register(request: Request):
+    context = {
+        'request': request,
+        'title': 'Реєстрація',
+    }
+
+    return templates.TemplateResponse(
+        'register.html',
+        context=context,
+    )

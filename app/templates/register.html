@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>{{ title }}</title>
+{% endblock %}
+
+
+{% block content %}
+<p class="h1">{{ title }}</p>
+
+<form class="row g-3" method="post" action="">
+
+
+    <div class="mb-3">
+      <label for="messageText" class="form-label">{{ title }}</label>
+      <textarea class="form-control" id="messageText" rows="3" required minlength="5"></textarea>
+    </div>
+
+
+    <button class="btn btn-outline-success" type="submit">Зареєструватися</button>
+
+
+</form>
+
+
+
+
+{% endblock %}
