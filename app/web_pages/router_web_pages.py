@@ -48,7 +48,7 @@ templates = Jinja2Templates(directory='app\\templates')
 
 @router.post('/search')
 @router.get('/menu')
-async def get_menu(request: Request, dish_name: str = Form(None), user=Depends(dependencies.get_current_user_required)):
+async def get_menu(request: Request, dish_name: str = Form(None), user=Depends(dependencies.get_current_user_optional)):
     filtered_menu = []
     if dish_name:
         for dish in menu_data.menu:
@@ -69,10 +69,11 @@ async def get_menu(request: Request, dish_name: str = Form(None), user=Depends(d
 
 
 @router.get('/about-us')
-async def about_us(request: Request):
+async def about_us(request: Request, user=Depends(dependencies.get_current_user_optional)):
     context = {
         'request': request,
         'title': 'Про нас',
+        'user': user,
     }
 
     return templates.TemplateResponse(
