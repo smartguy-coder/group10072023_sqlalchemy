@@ -46,6 +46,15 @@ class AuthHandler:
         except jwt.InvalidTokenError:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid token')
 
+    @classmethod
+    async def decode_token_web(cls, token: str | None) -> dict:
+        try:
+            payload = jwt.decode(token, cls.secret, algorithms=[cls.algorithm])
+            return payload
+        except jwt.ExpiredSignatureError:
+            return {}
+        except jwt.InvalidTokenError:
+            return {}
 
 class AuthLibrary:
 

@@ -59,7 +59,6 @@ async def get_menu(request: Request, dish_name: str = Form(None), user=Depends(d
         'request': request,
         'title': f'Результати пошуку за {dish_name}' if dish_name else 'Наше меню',
         'menu': filtered_menu if dish_name else menu_data.menu,
-        'username': 'ljdvhgjkdfkg',
         'user': user
     }
 
