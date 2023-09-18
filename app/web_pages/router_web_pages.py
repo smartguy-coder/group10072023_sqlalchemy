@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Request, Form
 from fastapi.templating import Jinja2Templates
+from pydantic import EmailStr
 
 from app import menu_data
+import dao
 
 import settings
 
@@ -116,3 +118,11 @@ async def register(request: Request):
         'register.html',
         context=context,
     )
+
+@router.post('/register-final')
+async def register_final(request: Request,
+                         name: str = Form(),
+                         login: EmailStr = Form(),
+                         notes: str = Form(default=''),
+                         password: str = Form()):
+    is_login_already_used = await dao.get_user_by_login(auth_details.login)
