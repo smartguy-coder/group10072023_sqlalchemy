@@ -3,6 +3,8 @@ from fastapi.templating import Jinja2Templates
 
 from app import menu_data
 
+import settings
+
 
 router = APIRouter(
     prefix='/web',
@@ -107,6 +109,7 @@ async def register(request: Request):
     context = {
         'request': request,
         'title': 'Реєстрація',
+        'min_password_length': settings.Settings.MIN_PASSWORD_LENGTH,
     }
 
     return templates.TemplateResponse(

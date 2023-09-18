@@ -20,6 +20,8 @@ class Settings:
 
     MAX_NOTES_LENGTH = 200
 
+    MIN_PASSWORD_LENGTH = 8
+
     @property
     def DATABASE_URL(self):
         return f'postgresql+asyncpg://{self.DATABASE_USER}:{self.DATABASE_PASSWORD}@' \
