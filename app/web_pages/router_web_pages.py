@@ -3,6 +3,8 @@ from fastapi.templating import Jinja2Templates
 from pydantic import EmailStr
 
 from app import menu_data
+from app.auth.auth_lib import AuthHandler, AuthLibrary
+
 import dao
 
 import settings
@@ -130,12 +132,24 @@ async def register_final(request: Request,
         context = {
             'request': request,
             'title': 'Помилка користувача',
-            'content': 'Користувач уже існує',
+            'content': f'Користувач {login} уже існує',
         }
-
         return templates.TemplateResponse(
             '400.html',
             context=context,
             status_code=status.HTTP_406_NOT_ACCEPTABLE
         )
+    hashed_password = await AuthHandler.get_password_hash(password)
+    user_data = await dao.create_user(
+        name=name,
+        login=login,
+        password=hashed_password,
+        notes=notes,
+    )
+    token = await AuthHandler.encode_token(user_data[0])
+    context = {
+        'request': request,
+        'title': 'Помилка користувача',
+        'content': f'Користувач {login} уже існує',
+    }
 
