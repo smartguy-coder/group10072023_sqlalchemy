@@ -127,8 +127,15 @@ async def register_final(request: Request,
                          password: str = Form()):
     is_login_already_used = await dao.get_user_by_login(login)
     if is_login_already_used:
-        raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE,
-            detail=f'User with email {login} already exists'
+        context = {
+            'request': request,
+            'title': 'Помилка користувача',
+            'content': 'Користувач уже існує',
+        }
+
+        return templates.TemplateResponse(
+            '400.html',
+            context=context,
+            status_code=status.HTTP_406_NOT_ACCEPTABLE
         )
 
