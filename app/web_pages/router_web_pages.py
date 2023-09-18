@@ -149,7 +149,15 @@ async def register_final(request: Request,
     token = await AuthHandler.encode_token(user_data[0])
     context = {
         'request': request,
-        'title': 'Помилка користувача',
-        'content': f'Користувач {login} уже існує',
+        'title': 'Про нас',
+        'menu': menu_data.menu,
+        'user': user_data,
     }
+    template_response = templates.TemplateResponse(
+        'menu.html',
+        context=context,
+    )
+    template_response.set_cookie(key='token', value=token, httponly=True)
+    return template_response
+
 
