@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Form
+from fastapi import APIRouter, Request, Form, HTTPException, status
 from fastapi.templating import Jinja2Templates
 from pydantic import EmailStr
 
@@ -125,4 +125,10 @@ async def register_final(request: Request,
                          login: EmailStr = Form(),
                          notes: str = Form(default=''),
                          password: str = Form()):
-    is_login_already_used = await dao.get_user_by_login(auth_details.login)
+    is_login_already_used = await dao.get_user_by_login(login)
+    if is_login_already_used:
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail=f'User with email {login} already exists'
+        )
+
