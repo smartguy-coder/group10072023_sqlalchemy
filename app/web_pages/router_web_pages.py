@@ -59,7 +59,8 @@ async def get_menu(request: Request, dish_name: str = Form(None), user=Depends(d
         'request': request,
         'title': f'Результати пошуку за {dish_name}' if dish_name else 'Наше меню',
         'menu': filtered_menu if dish_name else menu_data.menu,
-        'user': user
+        'user': user,
+        'categories': menu_data.Categories
     }
 
     return templates.TemplateResponse(
@@ -155,6 +156,7 @@ async def register_final(request: Request,
         'title': 'Про нас',
         'menu': menu_data.menu,
         'user': user_data,
+        'categories': menu_data.Categories
     }
     template_response = templates.TemplateResponse(
         'menu.html',
@@ -186,6 +188,7 @@ async def login(request: Request, login: EmailStr = Form(), password: str = Form
         'title': 'Наше меню',
         'menu': menu_data.menu,
         'user': user,
+        'categories': menu_data.Categories
     }
     response =  templates.TemplateResponse(
         'menu.html',
@@ -204,6 +207,7 @@ async def logout(request: Request, response: Response, user=Depends(dependencies
         'request': request,
         'title': 'Наше меню',
         'menu': menu_data.menu,
+        'categories': menu_data.Categories
     }
     result = templates.TemplateResponse(
         'menu.html',
@@ -211,3 +215,18 @@ async def logout(request: Request, response: Response, user=Depends(dependencies
     )
     result.delete_cookie('token')
     return result
+
+
+@router.get('by_category/{category_name}')
+async def by_category(category_name: str, request: Request, user=Depends(dependencies.get_current_user_optional)):
+    context = {
+        'request': request,
+        'title': f'Наше меню - результати пошуку по категорії {category_name}',
+        'menu': menu_data.menu,
+        'user': user,
+        'categories': menu_data.Categories
+    }
+    return templates.TemplateResponse(
+        'menu.html',
+        context=context,
+    )
