@@ -217,12 +217,14 @@ async def logout(request: Request, response: Response, user=Depends(dependencies
     return result
 
 
-@router.get('by_category/{category_name}')
+@router.get('/by_category/{category_name}')
 async def by_category(category_name: str, request: Request, user=Depends(dependencies.get_current_user_optional)):
+    menu = [menu for menu in menu_data.menu if category_name in menu['categories']]
+
     context = {
         'request': request,
         'title': f'Наше меню - результати пошуку по категорії {category_name}',
-        'menu': menu_data.menu,
+        'menu': menu,
         'user': user,
         'categories': menu_data.Categories
     }

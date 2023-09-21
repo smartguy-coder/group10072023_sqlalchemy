@@ -13,12 +13,12 @@
     <h3>Категорії</h3>
 
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" style="padding:10px">
             <div>
                 {% for c in categories %}
-                <button type="button" class="btn btn-primary">{{ c.value }}</button>
-
+                <a type="button" href="/web/by_category/{{ c.value }}" class="btn btn-primary" style="margin:2px">{{ c.value }}</a>
                 {% endfor %}
+
             </div>
         </div>
 
