@@ -83,7 +83,7 @@ async def about_us(request: Request, user=Depends(dependencies.get_current_user_
 
 
 @router.get('/map')
-async def map(request: Request):
+async def map_drive(request: Request):
     context = {
         'request': request,
         'title': 'Карта проїзду',
@@ -122,6 +122,7 @@ async def register(request: Request):
         'register.html',
         context=context,
     )
+
 
 @router.post('/register-final')
 async def register_final(request: Request,
@@ -163,3 +164,9 @@ async def register_final(request: Request,
     return template_response
 
 
+@router.get('/login')
+async def login(request: Request):
+    context = {
+        'request': request,
+        'title': 'Ввійти',
+    }
