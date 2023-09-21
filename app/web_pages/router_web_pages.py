@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Form, HTTPException, status, Depends
+from fastapi import APIRouter, Request, Form, HTTPException, status, Depends, Response
 from fastapi.templating import Jinja2Templates
 from pydantic import EmailStr
 
@@ -177,9 +177,7 @@ async def login(request: Request):
 
 
 @router.post('/login-final')
-async def login(request: Request, login: EmailStr = Form(),
-                password: str = Form()):
-
+async def login(request: Request, login: EmailStr = Form(), password: str = Form()):
     user = await AuthLibrary.authenticate_user(login=login, password=password)
     token = await AuthHandler.encode_token(user.id)
 
@@ -195,3 +193,18 @@ async def login(request: Request, login: EmailStr = Form(),
     )
     response.set_cookie(key='token', value=token, httponly=True)
     return response
+
+
+@router.post('/logout')
+@router.get('/logout')
+async def logout(request: Request, response: Response, user=Depends(dependencies.get_current_user_optional)):
+    response.delete_cookie('token')
+    context = {
+        'request': request,
+        'title': 'Наше меню',
+        'menu': menu_data.menu,
+    }
+    return templates.TemplateResponse(
+        'menu.html',
+        context=context,
+    )
