@@ -185,10 +185,13 @@ async def login(request: Request, login: EmailStr = Form(),
 
     context = {
         'request': request,
-        'title': 'Ввійти',
-
+        'title': 'Наше меню',
+        'menu': menu_data.menu,
+        'user': user,
     }
-    return templates.TemplateResponse(
-        'login.html',
+    response =  templates.TemplateResponse(
+        'menu.html',
         context=context,
     )
+    response.set_cookie(key='token', value=token, httponly=True)
+    return response
