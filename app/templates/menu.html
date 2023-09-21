@@ -15,7 +15,9 @@
     <div class="container-fluid">
         <div class="row">
             <div>
-                {% %}
+                {% for c in categories %}
+                    {{ c.value }}
+                {% endfor %}
             </div>
         </div>
 
