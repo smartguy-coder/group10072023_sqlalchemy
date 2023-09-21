@@ -198,13 +198,16 @@ async def login(request: Request, login: EmailStr = Form(), password: str = Form
 @router.post('/logout')
 @router.get('/logout')
 async def logout(request: Request, response: Response, user=Depends(dependencies.get_current_user_optional)):
-    response.delete_cookie('token')
+    # response.delete_cookie('token')
+
     context = {
         'request': request,
         'title': 'Наше меню',
         'menu': menu_data.menu,
     }
-    return templates.TemplateResponse(
+    result = templates.TemplateResponse(
         'menu.html',
         context=context,
     )
+    result.delete_cookie('token')
+    return result
