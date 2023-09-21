@@ -170,3 +170,7 @@ async def login(request: Request):
         'request': request,
         'title': 'Ввійти',
     }
+    return templates.TemplateResponse(
+        'login.html',
+        context=context,
+    )
