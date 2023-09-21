@@ -174,3 +174,21 @@ async def login(request: Request):
         'login.html',
         context=context,
     )
+
+
+@router.post('/login-final')
+async def login(request: Request, login: EmailStr = Form(),
+                password: str = Form()):
+
+    user = await AuthLibrary.authenticate_user(login=login, password=password)
+    token = await AuthHandler.encode_token(user.id)
+
+    context = {
+        'request': request,
+        'title': 'Ввійти',
+
+    }
+    return templates.TemplateResponse(
+        'login.html',
+        context=context,
+    )
