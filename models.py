@@ -8,12 +8,13 @@ from sqlalchemy.orm import Mapper, mapped_column
 from sqlalchemy.dialects.postgresql import JSONB
 
 from database import Base
+import settings
 
 
 class BaseInfoMixin:
     id = Column(Integer, primary_key=True)
     # id: Mapper[int] = mapped_column(primary_key=True)
-    notes = Column(String(200))
+    notes = Column(String(settings.Settings.MAX_NOTES_LENGTH))
     created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
 
 
