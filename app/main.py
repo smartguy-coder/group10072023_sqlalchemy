@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 
 import sentry_sdk
 
+import dao
 from app.web_pages import router_web_pages
 from app.auth import router_auth
 from app.sockets import router_websocket
@@ -33,9 +34,18 @@ async def main_page() -> dict:
     return {'greeting': 'HELLO'}
 
 
+@app.get('/all_users')
+async def all_users():
+    users = await dao.fetch_users()
+    print(users, 8888888888888)
+    for u in users:
+        print(u.name, u.login)
+    return {'users': users}
+
 @app.get('/{user_name}')
 @app.get('/{user_name}/{user_nick}')
 async def user_page(user_name: str, user_nick: str = '', limit: int = 10, skip: int = 0) -> dict:
     data = [i for i in range(1000)][skip:][:limit]
 
     return {'user_name': user_name, 'user_nick': user_nick, 'data': data}
+
