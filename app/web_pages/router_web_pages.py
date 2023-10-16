@@ -235,6 +235,7 @@ async def by_category(category_name: str, request: Request, user=Depends(depende
 
 
 @router.post('/cart')
+@router.get('/cart')
 # async def cart(request: Request, user=Depends(dependencies.get_current_user_optional)):
 async def cart(request: Request):
     # print(await request._body.decode(), 11111111111)
