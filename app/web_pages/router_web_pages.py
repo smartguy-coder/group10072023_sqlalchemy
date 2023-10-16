@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Form, HTTPException, status, Depends, Response
+from fastapi import APIRouter, Request, Form, HTTPException, status, Depends, Response, Body
 from fastapi.templating import Jinja2Templates
 from pydantic import EmailStr
 
@@ -230,5 +230,26 @@ async def by_category(category_name: str, request: Request, user=Depends(depende
     }
     return templates.TemplateResponse(
         'menu.html',
+        context=context,
+    )
+
+
+@router.post('/cart')
+@router.get('/cart')
+# async def cart(request: Request, user=Depends(dependencies.get_current_user_optional)):
+async def cart(request: Request):
+    # print(await request._body.decode(), 11111111111)
+    print(await request.body(), 22222222)
+    # print(await request.json(), 33333333333)
+    context = {
+        'request': request,
+        'title': f'Кошик',
+        'menu': menu_data.menu,
+        # 'user': user,
+        'categories': menu_data.Categories
+    }
+
+    return templates.TemplateResponse(
+        'cart3.html',
         context=context,
     )
